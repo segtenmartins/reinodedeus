@@ -360,6 +360,14 @@
             border-top: 1px solid var(--borda);
         }
 
+        .footer-link {
+            color: var(--cor-destaque);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-link:hover { opacity: 0.7; }
+
         #backTop {
             position: fixed;
             bottom: 30px;
@@ -395,7 +403,7 @@
         <div class="hero-category">Teologia Bíblica</div>
         <h1>O Reino de Deus</h1>
         <p>Buscai, pois, em primeiro lugar, o seu Reino e a sua justiça.</p>
-        <div class="hero-author">Estudo Teológico</div>
+        <div class="hero-author">Pr João Alves</div>
         <div class="scroll-arrow">↓</div>
     </header>
 
@@ -529,8 +537,11 @@
 
     <footer>
         <div style="font-size: 1.5rem; margin-bottom: 1rem;">⚜</div>
-        <p style="font-family: 'Cinzel', serif; font-size: 0.8rem;">O Reino de Deus</p>
-        <p style="font-size: 0.7rem; color: var(--cor-secundario); margin-top: 1rem;">Estudo baseado nas Escrituras Sagradas</p>
+        <p style="font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 0.5rem;">Pr João Alves</p>
+        <p style="font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--cor-secundario); margin-bottom: 1rem;">Vila Velha-ES</p>
+        <p style="font-size: 0.9rem;">
+            <a href="http://www.radiomateus633.com" target="_blank" class="footer-link">www.radiomateus633.com</a>
+        </p>
     </footer>
 
     <button id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
@@ -559,20 +570,17 @@
         const sections = document.querySelectorAll('.section');
 
         window.addEventListener('scroll', () => {
-            // Progresso
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             progressBar.style.width = scrolled + "%";
 
-            // Botão Voltar ao Topo
             if (winScroll > 400) {
                 backTop.style.display = "flex";
             } else {
                 backTop.style.display = "none";
             }
 
-            // Destaque Nav
             let current = "";
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
@@ -590,22 +598,14 @@
             });
         });
 
-        // --- Intersection Observer para Animações ---
-        const observerOptions = {
-            threshold: 0.08
-        };
-
+        const observerOptions = { threshold: 0.08 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
-                    // Se for uma seção, animar itens de lista dentro dela
                     const steps = entry.target.querySelectorAll('.step-item');
                     steps.forEach((step, index) => {
-                        setTimeout(() => {
-                            step.classList.add('visible');
-                        }, index * 200);
+                        setTimeout(() => { step.classList.add('visible'); }, index * 200);
                     });
                 }
             });
@@ -613,7 +613,6 @@
 
         sections.forEach(section => observer.observe(section));
 
-        // --- Tooltip System ---
         const tooltip = document.getElementById('tooltip');
         document.querySelectorAll('.ref-tag').forEach(tag => {
             tag.addEventListener('mousemove', (e) => {
@@ -622,14 +621,10 @@
                 tooltip.style.left = e.clientX + 15 + 'px';
                 tooltip.style.top = e.clientY + 15 + 'px';
             });
-            tag.addEventListener('mouseleave', () => {
-                tooltip.style.display = 'none';
-            });
+            tag.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
             tag.addEventListener('click', () => {
                 document.body.style.backgroundColor = '#fff';
-                setTimeout(() => {
-                    document.body.style.backgroundColor = '#0d0a04';
-                }, 100);
+                setTimeout(() => { document.body.style.backgroundColor = '#0d0a04'; }, 100);
             });
         });
     </script>

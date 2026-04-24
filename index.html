@@ -1,40 +1,637 @@
-﻿```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>O que significa buscar primeiro o Reino de Deus?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Reino de Deus | Mateus 6:33</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-destaque: #ffffff;
+            --cor-texto: #ffffff;
+            --cor-secundario: #bbbbbb;
+            --fundo: #0d0a04;
+            --fundo-card: rgba(255,255,255,0.05);
+            --borda: rgba(255,255,255,0.18);
+            --transicao: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--fundo);
+            color: var(--cor-texto);
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .nav-btn, .label {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 { font-family: 'Cinzel Decorative', serif; }
+
+        /* --- Barra de Progresso --- */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: var(--cor-destaque);
+            z-index: 2000;
+            transition: width 0.1s ease;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-symbol {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: flutuar 4s ease-in-out infinite;
+        }
+
+        @keyframes flutuar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-category {
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            color: var(--cor-secundario);
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-style: italic;
+            color: var(--cor-secundario);
+            max-width: 600px;
+        }
+
+        .hero-author {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            font-size: 1.5rem;
+            animation: arrowAnim 2s infinite;
+        }
+
+        @keyframes arrowAnim {
+            0% { opacity: 0; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+            100% { opacity: 0; transform: scaleY(0.5); }
+        }
+
+        /* --- Navegação --- */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--fundo);
+            border-bottom: 1px solid var(--borda);
+            z-index: 1000;
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+
+        nav::-webkit-scrollbar { display: none; }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--cor-secundario);
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: var(--transicao);
+            position: relative;
+        }
+
+        .nav-btn.active {
+            color: var(--cor-destaque);
+        }
+
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: var(--cor-destaque);
+        }
+
+        /* --- Conteúdo --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transicao);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            opacity: 0.3;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            height: 1px;
+            flex-grow: 1;
+            background: var(--cor-destaque);
+        }
+
+        .divider span {
+            margin: 0 15px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Componentes --- */
+        blockquote {
+            border-left: 2px solid var(--cor-destaque);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            background: var(--fundo-card);
+            position: relative;
+        }
+
+        blockquote p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        blockquote cite {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-style: normal;
+            font-size: 0.8rem;
+            color: var(--cor-secundario);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            border: 1px solid var(--borda);
+            padding: 2rem;
+            transition: var(--transicao);
+            background: var(--fundo-card);
+        }
+
+        .card:hover {
+            border-color: var(--cor-destaque);
+            transform: translateY(-5px);
+        }
+
+        .card-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+        .card h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--cor-destaque); }
+
+        .accordion {
+            border: 1px solid var(--borda);
+            margin-bottom: 1rem;
+        }
+
+        .acc-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--fundo-card);
+        }
+
+        .acc-header h3 { font-size: 0.9rem; margin: 0; }
+        .acc-icon { transition: transform 0.3s; font-size: 0.8rem; }
+
+        .acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            padding: 0 1.5rem;
+        }
+
+        .accordion.open .acc-content {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+
+        .accordion.open .acc-icon { transform: rotate(180deg); }
+
+        .step-list { margin: 3rem 0; }
+        .step-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: var(--transicao);
+        }
+
+        .step-item.visible { opacity: 1; transform: translateX(0); }
+
+        .step-number {
+            min-width: 45px;
+            height: 45px;
+            border: 1px solid var(--cor-destaque);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+        }
+
+        .implication-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .implication-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
+            border-radius: 50%;
+        }
+
+        .implication-item strong {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--cor-destaque);
+        }
+
+        .ref-tag {
+            display: inline-block;
+            border: 1px solid var(--borda);
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-family: 'Cinzel', serif;
+            cursor: help;
+            margin: 0 2px;
+            transition: 0.3s;
+        }
+
+        .ref-tag:hover {
+            background: var(--cor-destaque);
+            color: var(--fundo);
+        }
+
+        /* --- Tooltip --- */
+        #tooltip {
+            position: fixed;
+            background: #fff;
+            color: #000;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            border-radius: 2px;
+            pointer-events: none;
+            display: none;
+            z-index: 3000;
+            max-width: 250px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-family: 'EB Garamond', serif;
+        }
+
+        /* --- Footer & BackTop --- */
+        footer {
+            padding: 6rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--borda);
+        }
+
+        #backTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--fundo);
+            border: 1px solid var(--cor-destaque);
+            color: #fff;
+            display: none;
+            cursor: pointer;
+            z-index: 1000;
+            transition: 0.3s;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backTop:hover { background: var(--cor-destaque); color: var(--fundo); }
+
+        @media (max-width: 768px) {
+            nav { justify-content: flex-start; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <h1>O que significa buscar primeiro o Reino de Deus?</h1>
+    <div id="progressBar"></div>
 
-    <p>O versículo de <strong>Mateus 6:33</strong> é um dos pilares da vida cristã, inserido no coração do Sermão do Monte. Nele, Jesus apresenta uma orientação que reorganiza completamente as prioridades do ser humano: <em>"Buscai, pois, em primeiro lugar, o seu Reino e a sua justiça, e todas estas coisas vos serão acrescentadas"</em>. Este ensinamento surge em um contexto de exortação contra a ansiedade pelas necessidades básicas, como comida e vestimenta, lembrando que o Pai conhece nossas carências.</p>
+    <header class="hero">
+        <div class="hero-symbol">⚜</div>
+        <div class="hero-category">Teologia Bíblica</div>
+        <h1>O Reino de Deus</h1>
+        <p>Buscai, pois, em primeiro lugar, o seu Reino e a sua justiça.</p>
+        <div class="hero-author">Estudo Teológico</div>
+        <div class="scroll-arrow">↓</div>
+    </header>
 
-    <h2>O que é o Reino de Deus?</h2>
-    <p>Diferente do que muitos pensam, o Reino de Deus não se refere a um território geográfico ou político. Biblicamente, os termos <em>malkuth</em> (hebraico) e <em>basileia</em> (grego) enfatizam o <strong>exercício da soberania, do reinado e do governo de Deus</strong> sobre o universo e a história. É uma realidade espiritual e ética que ocorre quando a vontade divina se torna a norma indispensável da vida.</p>
+    <nav id="mainNav">
+        <button class="nav-btn" onclick="irPara('introducao')">Início</button>
+        <button class="nav-btn" onclick="irPara('natureza')">Natureza</button>
+        <button class="nav-btn" onclick="irPara('tempo')">O Tempo</button>
+        <button class="nav-btn" onclick="irPara('conflito')">Conflito</button>
+        <button class="nav-btn" onclick="irPara('pratica')">Como Buscar</button>
+    </nav>
 
-    <h2>A Tensão do "Já" e do "Ainda Não"</h2>
-    <p>O Reino possui uma dimensão temporal dupla. Ele está <strong>presente agora</strong> ("já"), pois foi inaugurado na pessoa e no ministério de Jesus. Seus milagres, curas e exorcismos são sinais concretos de que o governo de Deus já está atuando para libertar o ser humano das forças do mal. Ao mesmo tempo, o Reino é uma <strong>esperança futura</strong> ("ainda não"), que será plenamente consumada no fim dos tempos, quando Deus restaurará todas as coisas e eliminará o sofrimento. Vivemos, portanto, em um "tempo intermediário" entre a inauguração e a consumação final.</p>
+    <div class="container">
+        
+        <section class="section" id="introducao" data-nav="Início">
+            <blockquote>
+                <p>"Buscai, pois, em primeiro lugar, o seu Reino e a sua justiça, e todas estas coisas vos serão acrescentadas".</p>
+                <cite>Mateus 6:33</cite>
+            </blockquote>
+            <p>
+                O versículo de <span class="ref-tag" data-tip="Contexto do Sermão do Monte, onde Jesus ensina sobre a confiança no Pai.">Mateus 6:33</span> é um dos pilares da vida cristã. 
+                Inserido no coração do Sermão do Monte, Jesus apresenta uma orientação que reorganiza completamente as prioridades humanas: 
+                o Reino como o centro gravitacional da existência.
+            </p>
+        </section>
 
-    <h2>Jesus: O Reino em Pessoa</h2>
-    <p>Para a teologia cristã, Jesus é a <em>autobasileia</em>, ou seja, o <strong>Reino de Deus em pessoa</strong>. Nele, o caráter de Deus — Sua justiça, misericórdia e santidade — torna-se visível e palpável na história humana. Buscar o Reino significa, na prática, buscar o próprio caráter de Cristo e submeter-se ao Seu senhorio.</p>
+        <div class="divider"><span>❦</span></div>
 
-    <h2>O Conflito entre os Reinos</h2>
-    <p>O Reino de Deus manifesta-se em oposição direta ao "anti-reino" ou reino de satanás. Enquanto o Reino de Deus é caracterizado pela <strong>justiça, paz e alegria no Espírito Santo</strong> (Romanos 14:17), o reino das trevas manifesta-se através do egoísmo, da injustiça e da cobiça. As fontes alertam que até mesmo ambientes religiosos podem refletir o reino de satanás quando pregam o egocentrismo ou manipulam a fé para fins materiais, o que é classificado como uma "pseudo-conversão".</p>
+        <section class="section" id="natureza" data-nav="Natureza">
+            <h2 style="margin-bottom: 2rem;">O que é o Reino?</h2>
+            <p>Diferente de um território geográfico, o Reino refere-se ao exercício da soberania divina.</p>
+            
+            <div class="grid-cards">
+                <div class="card">
+                    <span class="card-icon">📜</span>
+                    <h3>Malkuth</h3>
+                    <p>Termo hebraico que enfatiza o reinado dinâmico de Deus sobre o universo e a história.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚖️</span>
+                    <h3>Basileia</h3>
+                    <p>Termo grego que aponta para a autoridade real e o governo de Deus sobre a vontade humana.</p>
+                </div>
+            </div>
+            
+            <p>É uma realidade espiritual e ética que ocorre quando a vontade divina se torna a norma indispensável da vida.</p>
+        </section>
 
-    <h2>Como Buscar o Reino Hoje?</h2>
-    <ul>
-        <li><strong>Prioridade do Coração:</strong> Significa colocar a vontade de Deus e os valores do Evangelho acima de qualquer carreira, dinheiro ou segurança material.</li>
-        <li><strong>Prática da Justiça:</strong> Buscar a "justiça de Deus" envolve viver alinhado aos padrões de santidade e fidelidade revelados por Ele.</li>
-        <li><strong>Confiança na Providência:</strong> Ao focar no Reino, o fiel é libertado da ansiedade, confiando que o sustento necessário será providenciado pelo Pai.</li>
-        <li><strong>Conversão Diária:</strong> Exige a <em>metanoia</em>, uma mudança radical de mentalidade que nos faz abandonar o orgulho para servir ao próximo, especialmente aos pobres e pequenos, que são os destinatários privilegiados do Reino.</li>
-    </ul>
+        <section class="section" id="tempo" data-nav="O Tempo">
+            <h2 style="margin-bottom: 2rem;">A Tensão Temporal</h2>
+            <p style="margin-bottom: 2rem;">O Reino possui uma dimensão dupla, frequentemente descrita como a tensão entre o presente e o futuro.</p>
 
-    <blockquote>
-        "O Reino de Deus não consiste em palavras, mas em poder; não em comilanças, mas em honestidade e paz no Espírito Santo".
-    </blockquote>
+            <div class="accordion">
+                <div class="acc-header" onclick="toggleAcc(this)">
+                    <h3>O Reino "Já" (Presente)</h3>
+                    <span class="acc-icon">▼</span>
+                </div>
+                <div class="acc-content">
+                    Inaugurado na pessoa de Jesus. Seus milagres e curas são sinais concretos de que o governo de Deus já atua para libertar o ser humano.
+                </div>
+            </div>
 
+            <div class="accordion">
+                <div class="acc-header" onclick="toggleAcc(this)">
+                    <h3>O Reino "Ainda Não" (Futuro)</h3>
+                    <span class="acc-icon">▼</span>
+                </div>
+                <div class="acc-content">
+                    A esperança da consumação final, quando Deus restaurará todas as coisas e eliminará definitivamente o sofrimento e a morte.
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem;">Jesus é a <strong>autobasileia</strong>: o Reino de Deus em pessoa. Nele, a justiça e a misericórdia tornam-se palpáveis.</p>
+        </section>
+
+        <div class="divider"><span>❦</span></div>
+
+        <section class="section" id="conflito" data-nav="Conflito">
+            <h2 style="margin-bottom: 2rem;">O Conflito entre Reinos</h2>
+            <p>O Reino de Deus manifesta-se em oposição direta ao "anti-reino".</p>
+            
+            <div class="implication-item">
+                <strong>Reino de Deus</strong>
+                <p>Caracterizado pela justiça, paz e alegria no Espírito Santo <span class="ref-tag" data-tip="Romanos 14:17">Ref.</span></p>
+            </div>
+            <div class="implication-item">
+                <strong>Reino das Trevas</strong>
+                <p>Manifesta-se através do egoísmo, da injustiça, da cobiça e da manipulação da fé para fins materiais.</p>
+            </div>
+        </section>
+
+        <section class="section" id="pratica" data-nav="Como Buscar">
+            <h2 style="margin-bottom: 2rem;">Como Buscar o Reino Hoje?</h2>
+            
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h3 style="font-size: 0.9rem;">Prioridade do Coração</h3>
+                        <p>Colocar a vontade de Deus acima de carreiras, dinheiro ou segurança material.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h3 style="font-size: 0.9rem;">Prática da Justiça</h3>
+                        <p>Viver alinhado aos padrões de santidade e fidelidade revelados por Ele.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h3 style="font-size: 0.9rem;">Confiança na Providência</h3>
+                        <p>Libertar-se da ansiedade, confiando que o Pai provê o sustento necessário.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h3 style="font-size: 0.9rem;">Conversão Diária (Metanoia)</h3>
+                        <p>Mudança radical de mentalidade para servir ao próximo, especialmente aos pequenos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <blockquote>
+                <p>"O Reino de Deus não consiste em palavras, mas em poder; não em comilanças, mas em honestidade e paz no Espírito Santo".</p>
+            </blockquote>
+        </section>
+
+    </div>
+
+    <footer>
+        <div style="font-size: 1.5rem; margin-bottom: 1rem;">⚜</div>
+        <p style="font-family: 'Cinzel', serif; font-size: 0.8rem;">O Reino de Deus</p>
+        <p style="font-size: 0.7rem; color: var(--cor-secundario); margin-top: 1rem;">Estudo baseado nas Escrituras Sagradas</p>
+    </footer>
+
+    <button id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
+    <div id="tooltip"></div>
+
+    <script>
+        // --- Navegação Suave ---
+        function irPara(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const navH = document.getElementById('mainNav').offsetHeight;
+            const top = el.getBoundingClientRect().top + window.scrollY - navH - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        // --- Acordeão ---
+        function toggleAcc(header) {
+            const acc = header.parentElement;
+            acc.classList.toggle('open');
+        }
+
+        // --- Progress Bar & Scroll Effects ---
+        const progressBar = document.getElementById('progressBar');
+        const backTop = document.getElementById('backTop');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+
+        window.addEventListener('scroll', () => {
+            // Progresso
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            // Botão Voltar ao Topo
+            if (winScroll > 400) {
+                backTop.style.display = "flex";
+            } else {
+                backTop.style.display = "none";
+            }
+
+            // Destaque Nav
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const navH = document.getElementById('mainNav').offsetHeight;
+                if (winScroll >= sectionTop - navH - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(current)) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
+        // --- Intersection Observer para Animações ---
+        const observerOptions = {
+            threshold: 0.08
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Se for uma seção, animar itens de lista dentro dela
+                    const steps = entry.target.querySelectorAll('.step-item');
+                    steps.forEach((step, index) => {
+                        setTimeout(() => {
+                            step.classList.add('visible');
+                        }, index * 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // --- Tooltip System ---
+        const tooltip = document.getElementById('tooltip');
+        document.querySelectorAll('.ref-tag').forEach(tag => {
+            tag.addEventListener('mousemove', (e) => {
+                tooltip.innerText = tag.getAttribute('data-tip');
+                tooltip.style.display = 'block';
+                tooltip.style.left = e.clientX + 15 + 'px';
+                tooltip.style.top = e.clientY + 15 + 'px';
+            });
+            tag.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+            tag.addEventListener('click', () => {
+                document.body.style.backgroundColor = '#fff';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#0d0a04';
+                }, 100);
+            });
+        });
+    </script>
 </body>
 </html>
-```
